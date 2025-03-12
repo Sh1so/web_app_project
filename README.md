@@ -24,7 +24,6 @@ This repository contains the backend REST API for the RemoTech E-shop, an online
 - **Swagger/OpenAPI** - API documentation
 - **JWT** - For stateless authentication
 - **Lombok** - To reduce boilerplate code
-- **JUnit 5 & Mockito** - For testing
 
 ## System Architecture
 
@@ -113,7 +112,6 @@ The application follows a layered architecture:
    - id (PK)
    - name
    - description
-   - parentCategoryId (FK, self-referencing)
 
 4. **Order**
    - id (PK)
