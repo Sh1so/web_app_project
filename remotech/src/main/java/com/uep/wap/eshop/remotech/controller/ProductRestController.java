@@ -9,7 +9,7 @@ import java.util.List;
 
 // Controller który przekieruje na odpowiednie metody oraz zwróci wyniki w JSON
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/products")
 public class ProductRestController {
 
     private ProductService productService;
