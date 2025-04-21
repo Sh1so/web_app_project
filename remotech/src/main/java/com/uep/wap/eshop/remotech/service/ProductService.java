@@ -1,8 +1,13 @@
 package com.uep.wap.eshop.remotech.service;
 
 import com.uep.wap.eshop.remotech.entity.Product;
+import com.uep.wap.eshop.remotech.entity.ProductDetails;
 import com.uep.wap.eshop.remotech.repository.ProductRepository;
 import com.uep.wap.eshop.remotech.repository.CategoryRepository;
+import com.uep.wap.eshop.remotech.repository.ProductDetailsRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,54 +19,25 @@ public class ProductService {
 
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
+    private final ProductDetailsRepository productDetailsRepository;
 
     public ProductService(ProductRepository productRepository,
-                         CategoryRepository categoryRepository) {
+                         CategoryRepository categoryRepository,
+                         ProductDetailsRepository productDetailsRepository) {
         this.productRepository = productRepository;
         this.categoryRepository = categoryRepository;
+        this.productDetailsRepository = productDetailsRepository;
     }
 
-    // Metody są z interfejsu JpaRepository
-
-    // CREATE AND UPDATE
-    public Product save(Product theProduct) {
-        return productRepository.save(theProduct);
-    }
-
-    // READ
-    public List<Product> findAll() {
-        return productRepository.findAll();
-    }
-
-    public Product findById(long id) {
-
-        // Tutaj trzeba wykorzystać Optional żeby działało
-        Optional<Product> result = productRepository.findById(id);
-
-        Product theProduct = null;
-        if (result.isPresent()) {
-            theProduct = result.get();
-        }
-        else {
-            throw new RuntimeException("Error with id");
-        }
-        return theProduct;
-    }
-
-    // DELETE
-    public void delete(long id) {
-        productRepository.deleteById(id);
-    }
-
-    public List<Product> getAllProducts() {
-        return productRepository.findAll();
-    }
-
-    public Optional<Product> getProductById(Long id) {
-        return productRepository.findById(id);
-    }
-
+    @Transactional
     public Product createProduct(Product product) {
+    
+        if (product.getProductDetails() != null && 
+            product.getProductDetails().getProduct() == null) {
+            product.getProductDetails().setProduct(product);
+        }
+        
+        // Save the product with its details in one transaction
         return productRepository.save(product);
     }
 
@@ -79,5 +55,50 @@ public class ProductService {
             return true;
         }
         return false;
+    }
+
+    public List<Product> getProductsByCategoryId(Long categoryId) {
+        // First verify that the category exists
+        if (!categoryRepository.existsById(categoryId)) {
+            throw new RuntimeException("Category not found with id: " + categoryId);
+        }
+        
+        return productRepository.findByCategoryId(categoryId);
+    }
+
+    @Transactional
+    public ProductDetails addProductDetails(Long productId, ProductDetails newDetails) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found"));
+
+        System.out.println("Product found");
+
+        ProductDetails details;
+
+        if (productDetailsRepository.existsById(productId)) {
+            details = productDetailsRepository.findById(productId).get();
+            System.out.println("details found");
+        } else {
+            details = new ProductDetails();
+            details.setProduct(product);
+            details.setDescription(newDetails.getDescription());
+            details.setFullName(newDetails.getFullName());
+            System.out.println("new details created");
+            System.out.println(details.toString());
+        }
+
+        if (details.getProduct() == null || details.getProduct().getId() == null) {
+            System.out.println("Product or productId is not set properly!");
+            throw new IllegalStateException("Product or productId is not set properly!");
+        }
+        
+
+        return productDetailsRepository.save(details);
+        
+    }
+
+    public Optional<ProductDetails> getProductDetails(Long productId) {
+        Optional<Product> productOptional = productRepository.findById(productId);
+        return productOptional.map(Product::getProductDetails);
     }
 }

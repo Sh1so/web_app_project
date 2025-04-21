@@ -38,9 +38,9 @@ public class User {
     @Column(name = "enabled", columnDefinition = "TINYINT(1)")
     private Boolean enabled;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
-    private UserRole userRole;
+    // @OneToOne
+    // @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    // private UserRole userRole;
 
     @OneToMany(mappedBy = "user")
     private List<Order> orders;
@@ -55,7 +55,7 @@ public class User {
     // Constructor with all fields except id
     public User(String firstName, String lastName, String password, String email, 
                 String phone, LocalDateTime createdAt, LocalDateTime updatedAt, 
-                Boolean enabled, UserRole userRole, List<Order> orders, List<Cart> carts) {
+                Boolean enabled, /*UserRole userRole,*/ List<Order> orders, List<Cart> carts) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
@@ -64,7 +64,7 @@ public class User {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.enabled = enabled;
-        this.userRole = userRole;
+        //this.userRole = userRole;
         this.orders = orders;
         this.carts = carts;
     }
@@ -117,9 +117,9 @@ public class User {
         return enabled;
     }
 
-    public UserRole getUserRole() {
-        return userRole;
-    }
+    // public UserRole getUserRole() {
+    //     return userRole;
+    // }
 
     public List<Order> getOrders() {
         return orders;
@@ -166,9 +166,9 @@ public class User {
         this.enabled = enabled;
     }
 
-    public void setUserRole(UserRole userRole) {
-        this.userRole = userRole;
-    }
+    // public void setUserRole(UserRole userRole) {
+    //     this.userRole = userRole;
+    // }
 
     public void setOrders(List<Order> orders) {
         this.orders = orders;

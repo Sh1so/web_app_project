@@ -1,6 +1,7 @@
 package com.uep.wap.eshop.remotech.entity;
 
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -29,8 +30,8 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
-
-    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private ProductDetails productDetails;
 
     // Default constructor
@@ -114,6 +115,9 @@ public class Product {
 
     public void setProductDetails(ProductDetails productDetails) {
         this.productDetails = productDetails;
+        if (productDetails != null) {
+            productDetails.setProduct(this);
+        }
     }
 
     @Override

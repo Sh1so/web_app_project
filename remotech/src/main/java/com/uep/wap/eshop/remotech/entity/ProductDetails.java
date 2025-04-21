@@ -1,6 +1,7 @@
 package com.uep.wap.eshop.remotech.entity;
 
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.util.Objects;
 
 @Entity
@@ -8,12 +9,12 @@ import java.util.Objects;
 public class ProductDetails {
 
     @Id
-    @Column(name = "product_id")
-    private Long id;
+    private Long productId;
 
     @OneToOne
     @MapsId
     @JoinColumn(name = "product_id")
+    @JsonBackReference
     private Product product;
 
     @Column(name = "full_name", length = 100)
@@ -26,15 +27,17 @@ public class ProductDetails {
     public ProductDetails() {
     }
 
-    // Constructor with all fields except id
-    public ProductDetails(String fullName, String description) {
+    // Constructor with all fields
+    public ProductDetails(Product product, String fullName, String description) {
+        this.product = product;
+        this.productId = product.getId(); // 🔑 for @MapsId to work
         this.fullName = fullName;
         this.description = description;
     }
 
     // Getters
     public Long getId() {
-        return id;
+        return productId;
     }
 
     public Product getProduct() {
@@ -51,13 +54,13 @@ public class ProductDetails {
 
     // Setters
     public void setId(Long id) {
-        this.id = id;
+        this.productId = id;
     }
 
     public void setProduct(Product product) {
         this.product = product;
         if (product != null) {
-            this.id = product.getId();
+            this.productId = product.getId();
         }
     }
 
@@ -74,19 +77,19 @@ public class ProductDetails {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ProductDetails that = (ProductDetails) o;
-        return Objects.equals(id, that.id) &&
+        return Objects.equals(productId, that.productId) &&
                Objects.equals(fullName, that.fullName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, fullName);
+        return Objects.hash(productId, fullName);
     }
 
     @Override
     public String toString() {
         return "ProductDetails{" +
-                "id=" + id +
+                "id=" + productId +
                 ", fullName='" + fullName + '\'' +
                 ", description='" + description + '\'' +
                 '}';

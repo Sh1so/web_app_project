@@ -45,9 +45,19 @@ public class UserController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
-        if (userService.deleteUser(id)) {
-            return ResponseEntity.ok().build();
-        }
-        return ResponseEntity.notFound().build();
+        return userService.deleteUser(id)
+                ? ResponseEntity.ok().build()
+                : ResponseEntity.notFound().build();
     }
+
+    // @PutMapping("/{id}/role")
+    // public ResponseEntity<User> updateUserRole(@PathVariable Long id, @RequestParam String role) {
+    //     try {
+    //         return userService.updateUserRole(id, role)
+    //                 .map(ResponseEntity::ok)
+    //                 .orElse(ResponseEntity.notFound().build());
+    //     } catch (RuntimeException e) {
+    //         return ResponseEntity.badRequest().build();
+    //     }
+    // }
 } 

@@ -1,8 +1,9 @@
 package com.uep.wap.eshop.remotech.service;
 
 import com.uep.wap.eshop.remotech.entity.User;
+//import com.uep.wap.eshop.remotech.entity.UserRole;
 import com.uep.wap.eshop.remotech.repository.UserRepository;
-import com.uep.wap.eshop.remotech.repository.UserRoleRepository;
+//import com.uep.wap.eshop.remotech.repository.UserRoleRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,12 +13,11 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
-    private final UserRoleRepository userRoleRepository;
+    //private final UserRoleRepository userRoleRepository;
 
-    public UserService(UserRepository userRepository,
-                      UserRoleRepository userRoleRepository) {
+    public UserService(UserRepository userRepository){
         this.userRepository = userRepository;
-        this.userRoleRepository = userRoleRepository;
+        //this.userRoleRepository = userRoleRepository;
     }
 
     public List<User> getAllUsers() {
@@ -47,4 +47,24 @@ public class UserService {
         }
         return false;
     }
+
+    // public Optional<User> updateUserRole(Long userId, String roleName) {
+    //     // Find the user
+    //     Optional<User> userOptional = userRepository.findById(userId);
+    //     if (userOptional.isEmpty()) {
+    //         return Optional.empty();
+    //     }
+
+    //     // Find the role by authority name
+    //     UserRole role = userRoleRepository.findByAuthority(roleName);
+    //     if (role == null) {
+    //         throw new RuntimeException("Role not found with name: " + roleName);
+    //     }
+
+    //     // Update the user's role
+    //     User user = userOptional.get();
+    //     user.setUserRole(role);
+        
+    //     return Optional.of(userRepository.save(user));
+    // }
 } 

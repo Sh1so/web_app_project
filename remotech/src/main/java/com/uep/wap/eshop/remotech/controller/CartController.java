@@ -43,11 +43,16 @@ public class CartController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCart(@PathVariable Long id) {
-        if (cartService.deleteCart(id)) {
-            return ResponseEntity.ok().build();
-        }
-        return ResponseEntity.notFound().build();
+    @DeleteMapping("/clear")
+    public ResponseEntity<Void> clearCart(@RequestParam Long userId) {
+        cartService.clearUserCart(userId);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/items/{id}")
+    public ResponseEntity<Void> deleteCartItem(@PathVariable Long id) {
+        return cartService.deleteCartItem(id)
+                ? ResponseEntity.ok().build()
+                : ResponseEntity.notFound().build();
     }
 } 

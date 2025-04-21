@@ -3,6 +3,7 @@ package com.uep.wap.eshop.remotech.service;
 import com.uep.wap.eshop.remotech.entity.Cart;
 import com.uep.wap.eshop.remotech.entity.CartItems;
 import com.uep.wap.eshop.remotech.repository.CartRepository;
+import com.uep.wap.eshop.remotech.repository.CartItemsRepository;
 import com.uep.wap.eshop.remotech.repository.ProductRepository;
 import com.uep.wap.eshop.remotech.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -16,13 +17,16 @@ public class CartService {
     private final CartRepository cartRepository;
     private final UserRepository userRepository;
     private final ProductRepository productRepository;
+    private final CartItemsRepository cartItemsRepository;
 
     public CartService(CartRepository cartRepository,
                       UserRepository userRepository,
-                      ProductRepository productRepository) {
+                      ProductRepository productRepository,
+                      CartItemsRepository cartItemsRepository) {
         this.cartRepository = cartRepository;
         this.userRepository = userRepository;
         this.productRepository = productRepository;
+        this.cartItemsRepository = cartItemsRepository;
     }
 
     public List<Cart> getAllCarts() {
@@ -77,9 +81,13 @@ public class CartService {
         return Optional.empty();
     }
 
-    public boolean deleteCart(Long id) {
-        if (cartRepository.existsById(id)) {
-            cartRepository.deleteById(id);
+    public void clearUserCart(Long userId) {
+        cartRepository.deleteByUserId(userId);
+    }
+
+    public boolean deleteCartItem(Long cartItemId) {
+        if (cartItemsRepository.existsById(cartItemId)) {
+            cartItemsRepository.deleteById(cartItemId);
             return true;
         }
         return false;
