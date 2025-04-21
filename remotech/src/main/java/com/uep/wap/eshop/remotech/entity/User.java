@@ -1,9 +1,9 @@
 package com.uep.wap.eshop.remotech.entity;
 
 import jakarta.persistence.*;
-
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "user")
@@ -20,10 +20,10 @@ public class User {
     @Column(name = "last_name", length = 50)
     private String lastName;
 
-    @Column(name = "password", length = 50)
+    @Column(length = 50)
     private String password;
 
-    @Column(name = "email", length = 80)
+    @Column(length = 80)
     private String email;
 
     @Column(name = "phone", length = 15)
@@ -38,7 +38,7 @@ public class User {
     @Column(name = "enabled", columnDefinition = "TINYINT(1)")
     private Boolean enabled;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private UserRole userRole;
 
@@ -47,6 +47,27 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private List<Cart> carts;
+
+    // Default constructor
+    public User() {
+    }
+
+    // Constructor with all fields except id
+    public User(String firstName, String lastName, String password, String email, 
+                String phone, LocalDateTime createdAt, LocalDateTime updatedAt, 
+                Boolean enabled, UserRole userRole, List<Order> orders, List<Cart> carts) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
+        this.email = email;
+        this.phone = phone;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.enabled = enabled;
+        this.userRole = userRole;
+        this.orders = orders;
+        this.carts = carts;
+    }
 
     @PrePersist
     protected void onCreate() {
@@ -57,5 +78,131 @@ public class User {
     @PreUpdate
     protected void onUpdate() {
         updatedAt = LocalDateTime.now();
+    }
+
+    // Getters
+    public Long getId() {
+        return id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public UserRole getUserRole() {
+        return userRole;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public List<Cart> getCarts() {
+        return carts;
+    }
+
+    // Setters
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public void setUserRole(UserRole userRole) {
+        this.userRole = userRole;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
+
+    public void setCarts(List<Cart> carts) {
+        this.carts = carts;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(id, user.id) &&
+               Objects.equals(email, user.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, email);
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                ", enabled=" + enabled +
+                '}';
     }
 } 

@@ -1,71 +1,145 @@
 package com.uep.wap.eshop.remotech.entity;
 
 import jakarta.persistence.*;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Objects;
 
 @Entity
-@Table(name="product")
+@Table(name = "product")
 public class Product {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name="id")
-    private long id;
-    @Column(name="product_name")
-    private String name;
-    @Column(name="product_price")
-    private double price;
-    @Column(name="product_quantity")
-    private int stockQuantity;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "product_id")
+    private Long id;
 
+    @Column(name = "short_name", length = 50)
+    private String shortName;
+
+    @Column(name = "price", precision = 9, scale = 2)
+    private BigDecimal price;
+
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL)
+    private ProductDetails productDetails;
+
+    // Default constructor
     public Product() {
-
     }
 
-    public Product(String name, double price, int stockQuantity) {
-        this.name = name;
+    // Constructor with all fields except id and relationships
+    public Product(String shortName, BigDecimal price, LocalDateTime createdAt,
+                  LocalDateTime updatedAt, Category category) {
+        this.shortName = shortName;
         this.price = price;
-        this.stockQuantity = stockQuantity;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.category = category;
     }
 
-    public long getId() {
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
+
+    // Getters
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public String getShortName() {
+        return shortName;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public ProductDetails getProductDetails() {
+        return productDetails;
+    }
+
+    // Setters
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setShortName(String shortName) {
+        this.shortName = shortName;
+    }
+
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
-    public int getStockQuantity() {
-        return stockQuantity;
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public void setStockQuantity(int stockQuantity) {
-        this.stockQuantity = stockQuantity;
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public void setProductDetails(ProductDetails productDetails) {
+        this.productDetails = productDetails;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return Objects.equals(id, product.id) &&
+               Objects.equals(shortName, product.shortName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, shortName);
     }
 
     @Override
     public String toString() {
         return "Product{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", shortName='" + shortName + '\'' +
                 ", price=" + price +
-                ", stockQuantity=" + stockQuantity +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                ", category=" + (category != null ? category.getId() : null) +
                 '}';
     }
-}
+} 
