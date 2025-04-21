@@ -25,7 +25,8 @@ public class ProductRestController {
     public Product addProduct(@RequestBody Product product) {
 
         // Ustawienie id = 0 powoduje stworzenie, a nie update w bazie danych
-        product.setId(0);
+        long id = 0;
+        product.setId(id);
 
         Product dbProduct = productService.save(product);
 

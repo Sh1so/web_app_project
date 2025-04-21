@@ -2,7 +2,7 @@ package com.uep.wap.eshop.remotech.service;
 
 import com.uep.wap.eshop.remotech.entity.Product;
 import com.uep.wap.eshop.remotech.repository.ProductRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.uep.wap.eshop.remotech.repository.CategoryRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,11 +12,13 @@ import java.util.Optional;
 @Service
 public class ProductService {
 
-    private ProductRepository productRepository;
+    private final ProductRepository productRepository;
+    private final CategoryRepository categoryRepository;
 
-    @Autowired
-    public ProductService(ProductRepository repository) {
-        this.productRepository = repository;
+    public ProductService(ProductRepository productRepository,
+                         CategoryRepository categoryRepository) {
+        this.productRepository = productRepository;
+        this.categoryRepository = categoryRepository;
     }
 
     // Metody są z interfejsu JpaRepository
@@ -31,7 +33,7 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    public Product findById(int id) {
+    public Product findById(long id) {
 
         // Tutaj trzeba wykorzystać Optional żeby działało
         Optional<Product> result = productRepository.findById(id);
@@ -47,7 +49,35 @@ public class ProductService {
     }
 
     // DELETE
-    public void delete(int id) {
+    public void delete(long id) {
         productRepository.deleteById(id);
+    }
+
+    public List<Product> getAllProducts() {
+        return productRepository.findAll();
+    }
+
+    public Optional<Product> getProductById(Long id) {
+        return productRepository.findById(id);
+    }
+
+    public Product createProduct(Product product) {
+        return productRepository.save(product);
+    }
+
+    public Optional<Product> updateProduct(Long id, Product product) {
+        if (productRepository.existsById(id)) {
+            product.setId(id);
+            return Optional.of(productRepository.save(product));
+        }
+        return Optional.empty();
+    }
+
+    public boolean deleteProduct(Long id) {
+        if (productRepository.existsById(id)) {
+            productRepository.deleteById(id);
+            return true;
+        }
+        return false;
     }
 }
