@@ -1,6 +1,8 @@
 package com.uep.wap.eshop.remotech.entity;
 
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -43,10 +45,12 @@ public class User {
     // private UserRole userRole;
 
     @OneToMany(mappedBy = "user")
+    @JsonManagedReference
     private List<Order> orders;
 
-    @OneToMany(mappedBy = "user")
-    private List<Cart> carts;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private Cart cart;
 
     // Default constructor
     public User() {
@@ -55,7 +59,7 @@ public class User {
     // Constructor with all fields except id
     public User(String firstName, String lastName, String password, String email, 
                 String phone, LocalDateTime createdAt, LocalDateTime updatedAt, 
-                Boolean enabled, /*UserRole userRole,*/ List<Order> orders, List<Cart> carts) {
+                Boolean enabled, /*UserRole userRole,*/ List<Order> orders, Cart cart) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
@@ -66,7 +70,7 @@ public class User {
         this.enabled = enabled;
         //this.userRole = userRole;
         this.orders = orders;
-        this.carts = carts;
+        this.cart = cart;
     }
 
     @PrePersist
@@ -125,8 +129,8 @@ public class User {
         return orders;
     }
 
-    public List<Cart> getCarts() {
-        return carts;
+    public Cart getCart() {
+        return cart;
     }
 
     // Setters
@@ -174,8 +178,11 @@ public class User {
         this.orders = orders;
     }
 
-    public void setCarts(List<Cart> carts) {
-        this.carts = carts;
+    public void setCart(Cart cart) {
+        this.cart = cart;
+        if (cart != null) {
+            cart.setUser(this);
+        }
     }
 
     @Override

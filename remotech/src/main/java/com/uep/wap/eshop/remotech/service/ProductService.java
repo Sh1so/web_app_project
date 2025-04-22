@@ -10,6 +10,7 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,12 +42,34 @@ public class ProductService {
         return productRepository.save(product);
     }
 
+    @Transactional
     public Optional<Product> updateProduct(Long id, Product product) {
-        if (productRepository.existsById(id)) {
-            product.setId(id);
-            return Optional.of(productRepository.save(product));
-        }
-        return Optional.empty();
+        return productRepository.findById(id)
+                .map(existingProduct -> {
+                    // Update main product fields
+                    existingProduct.setShortName(product.getShortName());
+                    existingProduct.setPrice(product.getPrice());
+                    existingProduct.setCategory(product.getCategory());
+                    existingProduct.setUpdatedAt(LocalDateTime.now());
+
+                    // Update or create product details
+                    if (product.getProductDetails() != null) {
+                        if (existingProduct.getProductDetails() != null) {
+                            // Update existing details
+                            existingProduct.getProductDetails().setFullName(product.getProductDetails().getFullName());
+                            existingProduct.getProductDetails().setDescription(product.getProductDetails().getDescription());
+                        } else {
+                            // Create new details
+                            ProductDetails newDetails = new ProductDetails();
+                            newDetails.setProduct(existingProduct);
+                            newDetails.setFullName(product.getProductDetails().getFullName());
+                            newDetails.setDescription(product.getProductDetails().getDescription());
+                            existingProduct.setProductDetails(newDetails);
+                        }
+                    }
+
+                    return productRepository.save(existingProduct);
+                });
     }
 
     public boolean deleteProduct(Long id) {
@@ -100,5 +123,13 @@ public class ProductService {
     public Optional<ProductDetails> getProductDetails(Long productId) {
         Optional<Product> productOptional = productRepository.findById(productId);
         return productOptional.map(Product::getProductDetails);
+    }
+
+    public List<Product> getAllProducts() {
+        return productRepository.findAll();
+    }
+
+    public Optional<Product> getProductById(Long id) {
+        return productRepository.findById(id);
     }
 }

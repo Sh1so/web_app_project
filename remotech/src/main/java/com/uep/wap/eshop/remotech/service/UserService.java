@@ -1,11 +1,14 @@
 package com.uep.wap.eshop.remotech.service;
 
 import com.uep.wap.eshop.remotech.entity.User;
+import com.uep.wap.eshop.remotech.entity.Cart;
 //import com.uep.wap.eshop.remotech.entity.UserRole;
 import com.uep.wap.eshop.remotech.repository.UserRepository;
 //import com.uep.wap.eshop.remotech.repository.UserRoleRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,10 +16,12 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final CartService cartService;
     //private final UserRoleRepository userRoleRepository;
 
-    public UserService(UserRepository userRepository){
+    public UserService(UserRepository userRepository, CartService cartService){
         this.userRepository = userRepository;
+        this.cartService = cartService;
         //this.userRoleRepository = userRoleRepository;
     }
 
@@ -28,16 +33,30 @@ public class UserService {
         return userRepository.findById(id);
     }
 
+    @Transactional
     public User createUser(User user) {
+        // Create a new cart for the user
+        Cart cart = new Cart(user);
+        user.setCart(cart);
+        
+        // Save the user (cart will be saved automatically due to cascade)
         return userRepository.save(user);
     }
 
     public Optional<User> updateUser(Long id, User user) {
-        if (userRepository.existsById(id)) {
-            user.setId(id);
-            return Optional.of(userRepository.save(user));
-        }
-        return Optional.empty();
+        return userRepository.findById(id)
+                .map(existingUser -> {
+                    // Preserve timestamps and update updatedAt
+                    user.setId(id);
+                    user.setCreatedAt(existingUser.getCreatedAt());
+                    user.setUpdatedAt(LocalDateTime.now());
+                    
+                    // Preserve relationships
+                    user.setOrders(existingUser.getOrders());
+                    user.setCart(existingUser.getCart());
+                    
+                    return userRepository.save(user);
+                });
     }
 
     public boolean deleteUser(Long id) {

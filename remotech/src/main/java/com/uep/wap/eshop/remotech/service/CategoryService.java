@@ -4,6 +4,7 @@ import com.uep.wap.eshop.remotech.entity.Category;
 import com.uep.wap.eshop.remotech.repository.CategoryRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,11 +30,20 @@ public class CategoryService {
     }
 
     public Optional<Category> updateCategory(Long id, Category category) {
-        if (categoryRepository.existsById(id)) {
-            category.setId(id);
-            return Optional.of(categoryRepository.save(category));
-        }
-        return Optional.empty();
+        return categoryRepository.findById(id)
+                .map(existingCategory -> {
+                    // Update fields but preserve timestamps
+                    category.setId(id);
+                    category.setCreatedAt(existingCategory.getCreatedAt());
+                    category.setUpdatedAt(LocalDateTime.now());
+                    
+                    // Update other fields
+                    existingCategory.setName(category.getName());
+                    existingCategory.setDescription(category.getDescription());
+                    existingCategory.setUpdatedAt(LocalDateTime.now());
+                    
+                    return categoryRepository.save(existingCategory);
+                });
     }
 
     public boolean deleteCategory(Long id) {

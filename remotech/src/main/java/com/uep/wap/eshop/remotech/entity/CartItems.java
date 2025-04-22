@@ -1,46 +1,62 @@
 package com.uep.wap.eshop.remotech.entity;
 
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.util.Objects;
 
 @Entity
 @Table(name = "cart_items")
+@IdClass(CartItemId.class)
 public class CartItems {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cart_id")
-    private Long id;
+    private Long cartId;
 
-    @ManyToOne
-    @JoinColumn(name = "cart_id", insertable = false, updatable = false)
-    private Cart cart;
-
-    @OneToOne
-    @JoinColumn(name = "product_id")
-    private Product product;
+    @Id
+    @Column(name = "product_id")
+    private Long productId;
 
     @Column(name = "quantity")
     private Integer quantity;
+
+    @ManyToOne
+    @JoinColumn(name = "cart_id", insertable = false, updatable = false)
+    @JsonBackReference
+    private Cart cart;
+
+    @OneToOne
+    @JoinColumn(name = "product_id", insertable = false, updatable = false)
+    private Product product;
 
     // Default constructor
     public CartItems() {
     }
 
-    // Constructor with all fields except id
+    // Constructor with all fields
     public CartItems(Cart cart, Product product, Integer quantity) {
         this.cart = cart;
+        this.cartId = cart != null ? cart.getId() : null;
         this.product = product;
+        this.productId = product != null ? product.getId() : null;
         this.quantity = quantity;
     }
 
     // Getters and Setters
-    public Long getId() {
-        return id;
+    public Long getCartId() {
+        return cartId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setCartId(Long cartId) {
+        this.cartId = cartId;
+    }
+
+    public Long getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Long productId) {
+        this.productId = productId;
     }
 
     public Cart getCart() {
@@ -49,6 +65,7 @@ public class CartItems {
 
     public void setCart(Cart cart) {
         this.cart = cart;
+        this.cartId = cart != null ? cart.getId() : null;
     }
 
     public Product getProduct() {
@@ -57,6 +74,7 @@ public class CartItems {
 
     public void setProduct(Product product) {
         this.product = product;
+        this.productId = product != null ? product.getId() : null;
     }
 
     public Integer getQuantity() {
@@ -72,22 +90,20 @@ public class CartItems {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CartItems cartItems = (CartItems) o;
-        return Objects.equals(id, cartItems.id) &&
-               Objects.equals(cart, cartItems.cart) &&
-               Objects.equals(product, cartItems.product);
+        return Objects.equals(cartId, cartItems.cartId) &&
+               Objects.equals(productId, cartItems.productId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, cart, product);
+        return Objects.hash(cartId, productId);
     }
 
     @Override
     public String toString() {
         return "CartItems{" +
-                "id=" + id +
-                ", cart=" + (cart != null ? cart.getId() : null) +
-                ", product=" + (product != null ? product.getId() : null) +
+                "cartId=" + cartId +
+                ", productId=" + productId +
                 ", quantity=" + quantity +
                 '}';
     }

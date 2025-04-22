@@ -49,10 +49,25 @@ public class CartController {
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/items/{id}")
-    public ResponseEntity<Void> deleteCartItem(@PathVariable Long id) {
-        return cartService.deleteCartItem(id)
+    @DeleteMapping("/{cartId}/items/{productId}")
+    public ResponseEntity<Void> deleteCartItem(
+            @PathVariable Long cartId,
+            @PathVariable Long productId) {
+        return cartService.deleteCartItem(cartId, productId)
                 ? ResponseEntity.ok().build()
                 : ResponseEntity.notFound().build();
+    }
+
+    @PostMapping("/{cartId}/items")
+    public ResponseEntity<Cart> addItemToCart(
+            @PathVariable Long cartId,
+            @RequestParam Long productId,
+            @RequestParam(defaultValue = "1") Integer quantity) {
+        try {
+            Cart updatedCart = cartService.addItemToCart(cartId, productId, quantity);
+            return ResponseEntity.ok(updatedCart);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 } 
