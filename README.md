@@ -1,5 +1,9 @@
 # RemoTech E-shop Backend API
 
+## Current version: 1.1v (06.05.2025)
+
+Added Spring Security framework into project; Now you need to pass appropriate credentials in order to access API endpoints.
+
 ## Overview
 
 This repository contains the backend REST API for the RemoTech E-shop, an online store specializing in tech accessories for remote workers, students, and everyday users, with headphones as the primary product category. The backend is built using Spring Boot, Hibernate ORM, and MySQL database.
@@ -15,8 +19,8 @@ This repository contains the backend REST API for the RemoTech E-shop, an online
 
 ## Technology Stack
 
-- **Java 17**
-- **Spring Boot 3.2.x** - Main framework providing dependency injection, web MVC, security, etc.
+- **Java 19**
+- **Spring Boot 3.4.5** - Main framework providing dependency injection, web MVC, security, etc.
 - **Spring Data JPA/Hibernate** - ORM for database interactions
 - **Spring Security** - For authentication and authorization
 - **MySQL 8.0** - Relational database
@@ -34,72 +38,24 @@ The application follows a layered architecture:
 
 ## API Endpoints
 
-### Products API
+See current REST API endpoints in file "api-docs.pdf" in "docs".
 
-- `GET /api/v1/products` - Get all products with pagination and filtering
-- `GET /api/v1/products/{id}` - Get a specific product by ID
-- `GET /api/v1/products/categories/{categoryId}` - Get products by category
-- `POST /api/v1/products` - Create a new product (Admin/Product Manager only)
-- `PUT /api/v1/products/{id}` - Update a product (Admin/Product Manager only)
-- `DELETE /api/v1/products/{id}` - Delete a product (Admin/Product Manager only)
-- `GET /api/v1/products/recommendations/{productId}` - Get product recommendations
-
-### Categories API
-
-- `GET /api/v1/categories` - Get all categories
-- `GET /api/v1/categories/{id}` - Get a specific category
-- `POST /api/v1/categories` - Create a new category (Admin/Product Manager only)
-- `PUT /api/v1/categories/{id}` - Update a category (Admin/Product Manager only)
-- `DELETE /api/v1/categories/{id}` - Delete a category (Admin/Product Manager only)
-
-### Users API
-
-- `POST /api/v1/auth/register` - Register a new customer
-- `POST /api/v1/auth/login` - Login for all users
-- `GET /api/v1/users/profile` - Get current user profile
-- `PUT /api/v1/users/profile` - Update user profile
-- `GET /api/v1/users` - Get all users (Admin only)
-- `GET /api/v1/users/{id}` - Get user by ID (Admin only)
-- `PUT /api/v1/users/{id}/role` - Update user role (Admin only)
-
-### Orders API
-
-- `POST /api/v1/orders` - Create a new order
-- `GET /api/v1/orders` - Get all orders for current user (or all orders for Admin)
-- `GET /api/v1/orders/{id}` - Get specific order details
-- `PUT /api/v1/orders/{id}/status` - Update order status (Admin only)
-
-### Cart API
-
-- `GET /api/v1/cart` - Get current user's cart
-- `POST /api/v1/cart/items` - Add item to cart
-- `PUT /api/v1/cart/items/{id}` - Update cart item quantity
-- `DELETE /api/v1/cart/items/{id}` - Remove item from cart
-- `DELETE /api/v1/cart/clear` - Clear the cart
-
-### Analytics API (Admin and Data Analyst only)
-
-- `GET /api/v1/analytics/sales/daily` - Get daily sales data
-- `GET /api/v1/analytics/sales/monthly` - Get monthly sales data
-- `GET /api/v1/analytics/products/top` - Get top-selling products
-- `GET /api/v1/analytics/customers/top` - Get top customers
-
-## Database Schema
+## Database Schema (OUTDATED)
 
 ### Main Entities:
 
 1. **User**
 
    - id (PK)
-   - email (unique)
-   - password (hashed)
    - firstName
    - lastName
-   - address
+   - password (hashed)
+   - email (unique)
    - phone
-   - role (CUSTOMER, ADMIN, PRODUCT_MANAGER, DATA_ANALYST)
    - createdAt
    - updatedAt
+   - enabled
+   - role (customer, employee, admin)
 
 2. **Product**
 
@@ -109,7 +65,6 @@ The application follows a layered architecture:
    - price
    - stockQuantity
    - category_id (FK)
-   - specifications (JSON object)
    - createdAt
    - updatedAt
 
@@ -153,7 +108,7 @@ The application follows a layered architecture:
    - product_id (FK)
    - quantity
 
-## Project Structure
+## Project Structure (OUTDATED)
 
 ```
 src/
@@ -262,26 +217,25 @@ src/
 1. Create a MySQL database:
 
 ```sql
-CREATE DATABASE remotech_db;
-CREATE USER 'remotech_user'@'localhost' IDENTIFIED BY 'your_password';
-GRANT ALL PRIVILEGES ON remotech_db.* TO 'remotech_user'@'localhost';
+CREATE DATABASE remotech;
+CREATE USER 'remotech_admin'@'localhost' IDENTIFIED BY 'your_password';
+GRANT ALL PRIVILEGES ON remotech_db.* TO 'remotech_admin'@'localhost';
 FLUSH PRIVILEGES;
 ```
 
 ### Application Setup
 
 1. Clone the repository
-2. Configure database properties in `application-dev.properties`
+2. Configure database properties in `application.properties`
 3. Build the application: `mvn clean install`
 4. Run the application: `mvn spring-boot:run -Dspring-boot.run.profiles=dev`
 
-## Authentication and Authorization
+## Authentication and Authorization (OUTDATED)
 
 The API uses JWT (JSON Web Tokens) for authentication. Users need to register and login to receive a token, which should be included in the `Authorization` header for subsequent requests.
 
-### User Roles and Permissions
+### User Roles and Permissions (TODO after Frontend)
 
 - **CUSTOMER**: Can browse products, manage their cart, place orders, and view their order history
 - **ADMIN**: Has full access to all endpoints
-- **PRODUCT_MANAGER**: Can manage products and categories
-- **DATA_ANALYST**: Can access analytics endpoints
+- **EMPLOYEE**: Can manage products and categories

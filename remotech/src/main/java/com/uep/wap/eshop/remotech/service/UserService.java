@@ -5,8 +5,11 @@ import com.uep.wap.eshop.remotech.entity.Cart;
 //import com.uep.wap.eshop.remotech.entity.UserRole;
 import com.uep.wap.eshop.remotech.repository.UserRepository;
 //import com.uep.wap.eshop.remotech.repository.UserRoleRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.uep.wap.eshop.remotech.security.SecurityConfig;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -17,7 +20,9 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final CartService cartService;
-    //private final UserRoleRepository userRoleRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public UserService(UserRepository userRepository, CartService cartService){
         this.userRepository = userRepository;
@@ -25,6 +30,15 @@ public class UserService {
         //this.userRoleRepository = userRoleRepository;
     }
 
+    public String encodePassword(String rawPassword) {
+        return passwordEncoder.encode(rawPassword);
+    }
+
+    public void registerNewUser(User user, String rawPassword) {
+        String encodedPassword = encodePassword(rawPassword);
+        user.setPassword(encodedPassword);
+        // save user to repository here...
+    }
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }

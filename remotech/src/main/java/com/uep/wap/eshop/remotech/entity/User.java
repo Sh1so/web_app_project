@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "user")
@@ -40,9 +41,8 @@ public class User {
     @Column(name = "enabled", columnDefinition = "TINYINT(1)")
     private Boolean enabled;
 
-    // @OneToOne
-    // @JoinColumn(name = "user_id", referencedColumnName = "user_id")
-    // private UserRole userRole;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
+    private Set<UserRole> roles;
 
     @OneToMany(mappedBy = "user")
     @JsonManagedReference
@@ -121,9 +121,9 @@ public class User {
         return enabled;
     }
 
-    // public UserRole getUserRole() {
-    //     return userRole;
-    // }
+    public Set<UserRole> getRoles() {
+        return roles;
+    }
 
     public List<Order> getOrders() {
         return orders;
@@ -170,9 +170,10 @@ public class User {
         this.enabled = enabled;
     }
 
-    // public void setUserRole(UserRole userRole) {
-    //     this.userRole = userRole;
-    // }
+
+    public void setRoles(Set<UserRole> roles) {
+        this.roles = roles;
+    }
 
     public void setOrders(List<Order> orders) {
         this.orders = orders;

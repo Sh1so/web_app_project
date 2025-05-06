@@ -191,7 +191,7 @@ CREATE TABLE IF NOT EXISTS `ait127810`.`user` (
   `user_id` INT NOT NULL AUTO_INCREMENT,
   `first_name` VARCHAR(50) NOT NULL,
   `last_name` VARCHAR(50) NOT NULL,
-  `password` VARCHAR(50) NOT NULL,
+  `password` VARCHAR(100) NOT NULL,
   `email` VARCHAR(80) NOT NULL,
   `phone` VARCHAR(15) NOT NULL,
   `created_at` DATETIME NOT NULL,
@@ -221,3 +221,16 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+--- inserting  initial admin user
+INSERT INTO user (user_id, first_name, last_name, password, email, phone, created_at, updated_at, enabled)
+VALUES (1, 'Admin', 'Admin', '$2a$10$fW6hCYq3XmpKoWzYvUSg1On.UUvsQgHDtKn5w0lQjSlFFGQX/d3EO', 'admin@example.com', '123123123', current_timestamp(), current_timestamp(), 1);
+
+ALTER TABLE user_role
+DROP PRIMARY KEY,
+ADD PRIMARY KEY (user_id, authority);
+
+INSERT INTO user_role (user_id, authority)
+VALUES (1, 'admin'),
+       (1, 'employee'),
+       (1, 'customer');
