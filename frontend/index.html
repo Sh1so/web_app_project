@@ -1,105 +1,143 @@
 <!DOCTYPE html>
 <html lang="pl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>RemoTech</title>
-    <link rel="stylesheet" href="css/landing.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/landing.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+    />
     <style>
-        .product-card__img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 12px;
-            display: block;
-        }
-        .testimonial__author-img {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-right: 10px;
-            vertical-align: middle;
-        }
-        .testimonial__author-wrap {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .why__list {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 32px;
-            margin-bottom: 24px;
-        }
-        .why__item {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            gap: 16px;
-            max-width: 440px;
-            font-size: 1.05rem;
-            text-align: left;
-            background: none;
-        }
-        .why__arrow {
-            font-size: 2rem;
-            color: #111;
-            flex-shrink: 0;
-        }
-        .header__actions {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-        .header__cart {
-            font-size: 1.1rem;
-            font-weight: 500;
-            color: #222;
-        }
-        .header__login {
-            background: #111;
-            color: #fff;
-            border: none;
-            padding: 8px 24px;
-            border-radius: 6px;
-            font-weight: 500;
-            margin-left: 0;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        .header__login:hover {
-            background: #222;
-        }
+      .product-card__img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 12px;
+        display: block;
+      }
+      .testimonial__author-img {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 10px;
+        vertical-align: middle;
+      }
+      .testimonial__author-wrap {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .why__list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 32px;
+        margin-bottom: 24px;
+      }
+      .why__item {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 16px;
+        max-width: 440px;
+        font-size: 1.05rem;
+        text-align: left;
+        background: none;
+      }
+      .why__arrow {
+        font-size: 2rem;
+        color: #111;
+        flex-shrink: 0;
+      }
+      .header {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: #fff;
+        border-bottom: 1px solid #ededed;
+        padding: 0 36px 0 36px;
+        min-height: 58px;
+      }
+      .header__actions {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+      .header__cart {
+        font-size: 1.1rem;
+        font-weight: 500;
+        color: #222;
+      }
+      .header__login {
+        background: #111;
+        color: #fff;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 6px;
+        font-weight: 500;
+        margin-left: 0;
+        cursor: pointer;
+        transition: background 0.2s;
+        text-decoration: none;
+      }
+      .header__nav {
+        display: flex;
+        align-items: center;
+        gap: 32px;
+      }
+      .header__login:hover {
+        background: #222;
+      }
+      .produkty-cart-btn {
+        padding: 8px 12px;
+      }
+      .header__logo {
+        font-size: 28px;
+        font-weight: 600;
+        padding: 10px 0;
+      }
+      .admin-button {
+        background-color: red;
+        text-decoration: none;
+      }
     </style>
-</head>
-<body>
+    <script src="js/auth.js"></script>
+  </head>
+  <body>
     <!-- Header -->
-    <header class="header">
-        <div class="header__logo">RemoTech</div>
-        <nav class="header__nav" style="display: flex; align-items: center; gap: 32px;">
-            <a href="produkty.html" class="header__link">Produkty</a>
-            <a href="onas.html" class="header__link">O nas</a>
-        </nav>
-        <div class="header__actions">
-            <button class="produkty-cart-btn" aria-label="Koszyk" onclick="window.location.href='cart.html'">
-                <i class="bi bi-cart"></i>
-            </button>
-            <button class="header__login" onclick="window.location.href='login.html'">LOG IN</button>
-        </div>
+    <header class="header" style="padding: 10px 40px">
+      <div class="header__logo">RemoTech</div>
+      <nav class="header__nav">
+        <a href="produkty.html" class="header__link">Produkty</a>
+        <a href="onas.html" class="header__link">O nas</a>
+      </nav>
+      <div class="header__actions">
+        <a class="header__login" href="login.html"> Zaloguj się </a>
+      </div>
     </header>
 
     <!-- Hero Section -->
     <section class="hero">
-        <div class="hero__content">
-            <h1>RemoTech</h1>
-            <p>Tworzymy wygodne, zdrowe i praktyczne stanowiska do pracy i nauki. Sprawdź naszą selekcję akcesoriów, które zmienią Twoją codzienność!</p>
-        </div>
-        <div class="hero__icons">
-            <img src="assets/main page-fixed.jpg" alt="Main page illustration" style="max-width:100%;height:auto;">
-        </div>
+      <div class="hero__content">
+        <h1>RemoTech</h1>
+        <p>
+          Tworzymy wygodne, zdrowe i praktyczne stanowiska do pracy i nauki.
+          Sprawdź naszą selekcję akcesoriów, które zmienią Twoją codzienność!
+        </p>
+      </div>
+      <div class="hero__icons">
+        <img
+          src="assets/main page-fixed.jpg"
+          alt="Main page illustration"
+          style="max-width: 100%; height: auto"
+        />
+      </div>
     </section>
 
     <!-- Icons Row (if you have SVGs or PNGs, add them here) -->
@@ -112,114 +150,424 @@
 
     <!-- Featured Products -->
     <section class="products">
-        <h2>Przykładowe produkty RemoTech</h2>
-        <div class="products__list" style="display: flex; gap: 32px; justify-content: center; align-items: stretch; flex-wrap: wrap; margin: 40px 0 60px 0;">
-            <div class="produkty-card" style="max-width: 270px; background: #fff; border-radius: 16px; box-shadow: 0 2px 8px #0001; display: flex; flex-direction: column; align-items: stretch; overflow: hidden; margin: 0; height: 100%; position: relative; padding: 0;">
-                <img src="assets/laptop stand.webp" alt="Podstawka pod laptopa" style="width: 100%; height: 170px; object-fit: contain; border-radius: 16px 16px 0 0; background: #fafbfb; box-shadow: none; margin-bottom: 0; align-self: stretch;">
-                <h3 style="font-size: 1.16rem; font-weight: 700; margin: 18px 0 8px 0; text-align: left; width: 100%; letter-spacing: -0.2px; padding: 0 18px;">Podstawka pod laptopa</h3>
-                <p style="font-size: 1.01rem; color: #444; margin: 0 0 18px 0; text-align: left; width: 100%; line-height: 1.52; padding: 0 18px;">Regulowana, lekka podstawka pod laptopa- poprawia ergonomię pracy i chłodzenie urządzenia.</p>
-                <div class="produkty-bottom-row" style="width: 100%; display: flex; align-items: center; justify-content: flex-end; margin-top: auto; padding: 0 18px 18px 18px; box-sizing: border-box;">
-                    <button class="product-card__cart" aria-label="Dodaj do koszyka" style="width: 36px; height: 36px; min-width: 36px; border: none; border-radius: 50%; background: #111; color: #fff; font-size: 1.1rem; padding: 0; cursor: pointer; transition: background 0.2s; display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 2px #0001; margin: 0;">
-                        <i class="bi bi-cart"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="produkty-card" style="max-width: 270px; background: #fff; border-radius: 16px; box-shadow: 0 2px 8px #0001; display: flex; flex-direction: column; align-items: stretch; overflow: hidden; margin: 0; height: 100%; position: relative; padding: 0;">
-                <img src="assets/mouse-right one.jpg" alt="Bezprzewodowa myszka" style="width: 100%; height: 170px; object-fit: contain; border-radius: 16px 16px 0 0; background: #fafbfb; box-shadow: none; margin-bottom: 0; align-self: stretch;">
-                <h3 style="font-size: 1.16rem; font-weight: 700; margin: 18px 0 8px 0; text-align: left; width: 100%; letter-spacing: -0.2px; padding: 0 18px;">Bezprzewodowa myszka</h3>
-                <p style="font-size: 1.01rem; color: #444; margin: 0 0 18px 0; text-align: left; width: 100%; line-height: 1.52; padding: 0 18px;">Profilowana mysz bezprzewodowa, stworzona z myślą o długiej pracy bez bólu nadgarstka.</p>
-                <div class="produkty-bottom-row" style="width: 100%; display: flex; align-items: center; justify-content: flex-end; margin-top: auto; padding: 0 18px 18px 18px; box-sizing: border-box;">
-                    <button class="product-card__cart" aria-label="Dodaj do koszyka" style="width: 36px; height: 36px; min-width: 36px; border: none; border-radius: 50%; background: #111; color: #fff; font-size: 1.1rem; padding: 0; cursor: pointer; transition: background 0.2s; display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 2px #0001; margin: 0;">
-                        <i class="bi bi-cart"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="produkty-card" style="max-width: 270px; background: #fff; border-radius: 16px; box-shadow: 0 2px 8px #0001; display: flex; flex-direction: column; align-items: stretch; overflow: hidden; margin: 0; height: 100%; position: relative; padding: 0;">
-                <img src="assets/mousepad.jpg" alt="Podkładka pod nadgarstki" style="width: 100%; height: 170px; object-fit: contain; border-radius: 16px 16px 0 0; background: #fafbfb; box-shadow: none; margin-bottom: 0; align-self: stretch;">
-                <h3 style="font-size: 1.16rem; font-weight: 700; margin: 18px 0 8px 0; text-align: left; width: 100%; letter-spacing: -0.2px; padding: 0 18px;">Podkładka pod nadgarstki</h3>
-                <p style="font-size: 1.01rem; color: #444; margin: 0 0 18px 0; text-align: left; width: 100%; line-height: 1.52; padding: 0 18px;">Miękka, żelowa podkładka- chroni nadgarstki i zapewnia wygodę podczas pisania.</p>
-                <div class="produkty-bottom-row" style="width: 100%; display: flex; align-items: center; justify-content: flex-end; margin-top: auto; padding: 0 18px 18px 18px; box-sizing: border-box;">
-                    <button class="product-card__cart" aria-label="Dodaj do koszyka" style="width: 36px; height: 36px; min-width: 36px; border: none; border-radius: 50%; background: #111; color: #fff; font-size: 1.1rem; padding: 0; cursor: pointer; transition: background 0.2s; display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 2px #0001; margin: 0;">
-                        <i class="bi bi-cart"></i>
-                    </button>
-                </div>
-            </div>
+      <h2>Przykładowe produkty RemoTech</h2>
+      <div
+        class="products__list"
+        style="
+          display: flex;
+          gap: 32px;
+          justify-content: center;
+          align-items: stretch;
+          flex-wrap: wrap;
+          margin: 40px 0 60px 0;
+        "
+      >
+        <div
+          class="produkty-card"
+          style="
+            max-width: 270px;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px #0001;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            overflow: hidden;
+            margin: 0;
+            height: 100%;
+            position: relative;
+            padding: 0;
+          "
+        >
+          <img
+            src="assets/laptop stand.webp"
+            alt="Podstawka pod laptopa"
+            style="
+              width: 100%;
+              height: 170px;
+              object-fit: contain;
+              border-radius: 16px 16px 0 0;
+              background: #fafbfb;
+              box-shadow: none;
+              margin-bottom: 0;
+              align-self: stretch;
+            "
+          />
+          <h3
+            style="
+              font-size: 1.16rem;
+              font-weight: 700;
+              margin: 18px 0 8px 0;
+              text-align: left;
+              width: 100%;
+              letter-spacing: -0.2px;
+              padding: 0 18px;
+            "
+          >
+            Podstawka pod laptopa
+          </h3>
+          <p
+            style="
+              font-size: 1.01rem;
+              color: #444;
+              margin: 0 0 18px 0;
+              text-align: left;
+              width: 100%;
+              line-height: 1.52;
+              padding: 0 18px;
+            "
+          >
+            Regulowana, lekka podstawka pod laptopa- poprawia ergonomię pracy i
+            chłodzenie urządzenia.
+          </p>
+          <div
+            class="produkty-bottom-row"
+            style="
+              width: 100%;
+              display: flex;
+              align-items: center;
+              justify-content: flex-end;
+              margin-top: auto;
+              padding: 0 18px 18px 18px;
+              box-sizing: border-box;
+            "
+          >
+            <button
+              class="product-card__cart"
+              aria-label="Dodaj do koszyka"
+              style="
+                width: 36px;
+                height: 36px;
+                min-width: 36px;
+                border: none;
+                border-radius: 50%;
+                background: #111;
+                color: #fff;
+                font-size: 1.1rem;
+                padding: 0;
+                cursor: pointer;
+                transition: background 0.2s;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                box-shadow: 0 1px 2px #0001;
+                margin: 0;
+              "
+            >
+              <i class="bi bi-cart"></i>
+            </button>
+          </div>
         </div>
+        <div
+          class="produkty-card"
+          style="
+            max-width: 270px;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px #0001;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            overflow: hidden;
+            margin: 0;
+            height: 100%;
+            position: relative;
+            padding: 0;
+          "
+        >
+          <img
+            src="assets/mouse-right one.jpg"
+            alt="Bezprzewodowa myszka"
+            style="
+              width: 100%;
+              height: 170px;
+              object-fit: contain;
+              border-radius: 16px 16px 0 0;
+              background: #fafbfb;
+              box-shadow: none;
+              margin-bottom: 0;
+              align-self: stretch;
+            "
+          />
+          <h3
+            style="
+              font-size: 1.16rem;
+              font-weight: 700;
+              margin: 18px 0 8px 0;
+              text-align: left;
+              width: 100%;
+              letter-spacing: -0.2px;
+              padding: 0 18px;
+            "
+          >
+            Bezprzewodowa myszka
+          </h3>
+          <p
+            style="
+              font-size: 1.01rem;
+              color: #444;
+              margin: 0 0 18px 0;
+              text-align: left;
+              width: 100%;
+              line-height: 1.52;
+              padding: 0 18px;
+            "
+          >
+            Profilowana mysz bezprzewodowa, stworzona z myślą o długiej pracy
+            bez bólu nadgarstka.
+          </p>
+          <div
+            class="produkty-bottom-row"
+            style="
+              width: 100%;
+              display: flex;
+              align-items: center;
+              justify-content: flex-end;
+              margin-top: auto;
+              padding: 0 18px 18px 18px;
+              box-sizing: border-box;
+            "
+          >
+            <button
+              class="product-card__cart"
+              aria-label="Dodaj do koszyka"
+              style="
+                width: 36px;
+                height: 36px;
+                min-width: 36px;
+                border: none;
+                border-radius: 50%;
+                background: #111;
+                color: #fff;
+                font-size: 1.1rem;
+                padding: 0;
+                cursor: pointer;
+                transition: background 0.2s;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                box-shadow: 0 1px 2px #0001;
+                margin: 0;
+              "
+            >
+              <i class="bi bi-cart"></i>
+            </button>
+          </div>
+        </div>
+        <div
+          class="produkty-card"
+          style="
+            max-width: 270px;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px #0001;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            overflow: hidden;
+            margin: 0;
+            height: 100%;
+            position: relative;
+            padding: 0;
+          "
+        >
+          <img
+            src="assets/mousepad.jpg"
+            alt="Podkładka pod nadgarstki"
+            style="
+              width: 100%;
+              height: 170px;
+              object-fit: contain;
+              border-radius: 16px 16px 0 0;
+              background: #fafbfb;
+              box-shadow: none;
+              margin-bottom: 0;
+              align-self: stretch;
+            "
+          />
+          <h3
+            style="
+              font-size: 1.16rem;
+              font-weight: 700;
+              margin: 18px 0 8px 0;
+              text-align: left;
+              width: 100%;
+              letter-spacing: -0.2px;
+              padding: 0 18px;
+            "
+          >
+            Podkładka pod nadgarstki
+          </h3>
+          <p
+            style="
+              font-size: 1.01rem;
+              color: #444;
+              margin: 0 0 18px 0;
+              text-align: left;
+              width: 100%;
+              line-height: 1.52;
+              padding: 0 18px;
+            "
+          >
+            Miękka, żelowa podkładka- chroni nadgarstki i zapewnia wygodę
+            podczas pisania.
+          </p>
+          <div
+            class="produkty-bottom-row"
+            style="
+              width: 100%;
+              display: flex;
+              align-items: center;
+              justify-content: flex-end;
+              margin-top: auto;
+              padding: 0 18px 18px 18px;
+              box-sizing: border-box;
+            "
+          >
+            <button
+              class="product-card__cart"
+              aria-label="Dodaj do koszyka"
+              style="
+                width: 36px;
+                height: 36px;
+                min-width: 36px;
+                border: none;
+                border-radius: 50%;
+                background: #111;
+                color: #fff;
+                font-size: 1.1rem;
+                padding: 0;
+                cursor: pointer;
+                transition: background 0.2s;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                box-shadow: 0 1px 2px #0001;
+                margin: 0;
+              "
+            >
+              <i class="bi bi-cart"></i>
+            </button>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- Why Choose Us -->
     <section class="why">
-        <h2>Dlaczego RemoTech jest najlepszym wyborem ?</h2>
-        <div class="why__list">
-            <div class="why__item">
-                <span class="why__arrow">→</span>
-                <span>Stawiamy na jakość i wygodę – wszystkie produkty są sprawdzone przez specjalistów, aby zapewnić Ci komfortową pracę i naukę każdego dnia.</span>
-            </div>
-            <div class="why__item">
-                <span class="why__arrow">→</span>
-                <span>RemoTech to szybka wysyłka, przyjazna obsługa i sprawdzone akcesoria, które naprawdę zmieniają Twoje domowe biuro na lepsze.</span>
-            </div>
-            <div class="why__item">
-                <span class="why__arrow">→</span>
-                <span>Oferujemy tylko to, z czego sami chcielibyśmy korzystać – niezawodne gadżety, które podnoszą jakość codziennej pracy.</span>
-            </div>
+      <h2>Dlaczego RemoTech jest najlepszym wyborem ?</h2>
+      <div class="why__list">
+        <div class="why__item">
+          <span class="why__arrow">→</span>
+          <span
+            >Stawiamy na jakość i wygodę – wszystkie produkty są sprawdzone
+            przez specjalistów, aby zapewnić Ci komfortową pracę i naukę każdego
+            dnia.</span
+          >
         </div>
-        <div class="why__cta">
-            <button onclick="window.location.href='onas.html'">O NAS</button>
+        <div class="why__item">
+          <span class="why__arrow">→</span>
+          <span
+            >RemoTech to szybka wysyłka, przyjazna obsługa i sprawdzone
+            akcesoria, które naprawdę zmieniają Twoje domowe biuro na
+            lepsze.</span
+          >
         </div>
+        <div class="why__item">
+          <span class="why__arrow">→</span>
+          <span
+            >Oferujemy tylko to, z czego sami chcielibyśmy korzystać –
+            niezawodne gadżety, które podnoszą jakość codziennej pracy.</span
+          >
+        </div>
+      </div>
+      <div class="why__cta">
+        <button onclick="window.location.href='onas.html'">O NAS</button>
+      </div>
     </section>
 
     <!-- Testimonials -->
     <section class="testimonials">
-        <h2>Jakość, która mówi sama za siebie</h2>
-        <div class="testimonials__list">
-            <div class="testimonial">
-                <p>"Ekspresowa wysyłka i świetna jakość produktów. Mój nowy sprzęt do pracy sprawdza się idealnie!"</p>
-                <span class="testimonial__author-wrap">
-                    <img src="assets/profile icon.jpg" alt="Marta" class="testimonial__author-img">
-                    <span class="testimonial__author">Marta</span>
-                </span>
-            </div>
-            <div class="testimonial">
-                <p>"Wszystko zgodne z opisem, bardzo wygodne akcesoria. Na pewno wrócę po więcej!"</p>
-                <span class="testimonial__author-wrap">
-                    <img src="assets/profile icon.jpg" alt="Tomek" class="testimonial__author-img">
-                    <span class="testimonial__author">Tomek</span>
-                </span>
-            </div>
-            <div class="testimonial">
-                <p>"Super obsługa i szybka pomoc przy zamówieniu. Polecam każdemu, kto ceni wygodę przy pracy zdalnej."</p>
-                <span class="testimonial__author-wrap">
-                    <img src="assets/profile icon.jpg" alt="Jakub" class="testimonial__author-img">
-                    <span class="testimonial__author">Jakub</span>
-                </span>
-            </div>
+      <h2>Jakość, która mówi sama za siebie</h2>
+      <div class="testimonials__list">
+        <div class="testimonial">
+          <p>
+            "Ekspresowa wysyłka i świetna jakość produktów. Mój nowy sprzęt do
+            pracy sprawdza się idealnie!"
+          </p>
+          <span class="testimonial__author-wrap">
+            <img
+              src="assets/profile icon.jpg"
+              alt="Marta"
+              class="testimonial__author-img"
+            />
+            <span class="testimonial__author">Marta</span>
+          </span>
         </div>
+        <div class="testimonial">
+          <p>
+            "Wszystko zgodne z opisem, bardzo wygodne akcesoria. Na pewno wrócę
+            po więcej!"
+          </p>
+          <span class="testimonial__author-wrap">
+            <img
+              src="assets/profile icon.jpg"
+              alt="Tomek"
+              class="testimonial__author-img"
+            />
+            <span class="testimonial__author">Tomek</span>
+          </span>
+        </div>
+        <div class="testimonial">
+          <p>
+            "Super obsługa i szybka pomoc przy zamówieniu. Polecam każdemu, kto
+            ceni wygodę przy pracy zdalnej."
+          </p>
+          <span class="testimonial__author-wrap">
+            <img
+              src="assets/profile icon.jpg"
+              alt="Jakub"
+              class="testimonial__author-img"
+            />
+            <span class="testimonial__author">Jakub</span>
+          </span>
+        </div>
+      </div>
     </section>
 
     <!-- Call to Action -->
     <section class="cta">
-        <div class="cta__content">
-            <h2>Zostań z nami na dłużej!</h2>
-            <button onclick="window.location.href='login.html'">Zarejestruj się!</button>
-        </div>
+      <div class="cta__content">
+        <h2>Zostań z nami na dłużej!</h2>
+        <button onclick="window.location.href='register.html'">
+          Zarejestruj się!
+        </button>
+      </div>
     </section>
 
     <!-- Footer -->
     <footer class="footer">
-        <div class="footer__brand">RemoTech
-            <span class="footer__social" style="margin-left: 18px;">
-                <a href="#"><i class="bi bi-facebook"></i></a>
-                <a href="#"><i class="bi bi-instagram"></i></a>
-            </span>
-        </div>
-        <div class="footer__links" style="display: flex; align-items: center; gap: 24px;">
-            <a href="produkty.html">Produkty</a>
-            <a href="onas.html">O nas</a>
-            <button class="produkty-cart-btn" aria-label="Koszyk" onclick="window.location.href='cart.html'">
-                <i class="bi bi-cart"></i>
-            </button>
-        </div>
+      <div class="footer__brand">
+        RemoTech
+        <span class="footer__social" style="margin-left: 18px">
+          <a href="#"><i class="bi bi-facebook"></i></a>
+          <a href="#"><i class="bi bi-instagram"></i></a>
+        </span>
+      </div>
+      <div
+        class="footer__links"
+        style="display: flex; align-items: center; gap: 24px"
+      >
+        <a href="produkty.html">Produkty</a>
+        <a href="onas.html">O nas</a>
+        <button
+          class="produkty-cart-btn"
+          aria-label="Koszyk"
+          onclick="window.location.href='cart.html'"
+        >
+          <i class="bi bi-cart"></i>
+        </button>
+      </div>
     </footer>
-</body>
+  </body>
 </html>

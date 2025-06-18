@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rejestracja - RemoTech</title>
+    <link rel="stylesheet" href="css/landing.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+    />
+    <style>
+      .header__logo {
+        font-size: 28px;
+        font-weight: 600;
+        padding: 10px 0;
+      }
+      .login-hero {
+        background: url("assets/main page-fixed.jpg") center/cover no-repeat;
+        min-height: 260px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+      }
+      .login-hero__overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(34, 34, 34, 0.55);
+        z-index: 1;
+      }
+      .login-hero__content {
+        position: relative;
+        z-index: 2;
+        color: #fff;
+        text-align: center;
+      }
+      .login-hero__content h1 {
+        font-size: 2.2rem;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+      }
+      .login-hero__content p {
+        font-size: 1.1rem;
+        margin-bottom: 1.2rem;
+      }
+      .login-hero__cta {
+        background: #111;
+        color: #fff;
+        border: none;
+        padding: 12px 32px;
+        border-radius: 6px;
+        font-size: 1.1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+      .login-hero__cta:hover {
+        background: #222;
+      }
+      .login-form-section {
+        background: #fff;
+        width: 100%;
+        max-width: 1100px;
+        margin: 32px auto 48px auto;
+        border-radius: 16px;
+        box-shadow: 0 2px 16px #0001;
+        padding: 48px 80px 36px 80px;
+        position: relative;
+        z-index: 3;
+      }
+      .login-form-title {
+        font-size: 2rem;
+        font-weight: bold;
+        margin-bottom: 32px;
+        text-align: center;
+      }
+      .login-form-group {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+        max-width: 340px;
+      }
+      .login-form {
+        display: flex;
+        flex-direction: column;
+        gap: 22px;
+        align-items: center;
+      }
+      .login-form label {
+        font-size: 1rem;
+        font-weight: 500;
+        margin-bottom: 6px;
+        align-self: flex-start;
+        width: 100%;
+        max-width: 340px;
+      }
+      .login-form input[type="text"],
+      .login-form input[type="password"] {
+        padding: 12px 14px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 1rem;
+        background: #fafafa;
+        outline: none;
+        transition: border 0.2s;
+        width: 100%;
+        max-width: 340px;
+      }
+      .login-form input[type="text"]:focus,
+      .login-form input[type="password"]:focus {
+        border: 1.5px solid #111;
+      }
+      .login-form button {
+        background: #111;
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        padding: 12px 0;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        margin-top: 10px;
+        transition: background 0.2s;
+        width: 100%;
+        max-width: 180px;
+        align-self: center;
+      }
+      .login-form button:hover {
+        background: #222;
+      }
+      @media (max-width: 600px) {
+        .login-form-section {
+          padding: 32px 12px 24px 12px;
+        }
+        .login-form-title {
+          font-size: 1.3rem;
+        }
+      }
+    </style>
+
+    <!-- 2. Twój skrypt, który używa bcrypt -->
+    <script src="/js/sign.js" defer></script>
+  </head>
+  <body style="min-height: 100vh; display: flex; flex-direction: column">
+    <!-- Hero Section with background icons -->
+    <section
+      class="login-hero"
+      style="
+        position: relative;
+        background: #888;
+        background-image: url('assets/main page-fixed.jpg');
+        background-size: cover;
+        background-position: center;
+        min-height: 220px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      "
+    >
+      <div
+        style="
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0, 0, 0, 0.65);
+          z-index: 1;
+        "
+      ></div>
+      <div
+        style="
+          position: relative;
+          z-index: 2;
+          width: 100%;
+          max-width: 700px;
+          margin: 0 auto;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          padding: 48px 0 44px 0;
+        "
+      >
+        <h1
+          style="
+            color: #fff;
+            font-size: 3.2rem;
+            font-weight: bold;
+            margin-bottom: 12px;
+          "
+        >
+          RemoTech
+        </h1>
+        <p style="color: #fff; font-size: 1.1rem; margin-bottom: 18px">
+          Zostań z nami na dłużej!
+        </p>
+        <a
+          href="index.html"
+          class="login-hero__cta"
+          style="
+            background: #111;
+            color: #fff;
+            border: none;
+            padding: 12px 32px;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+            text-decoration: none;
+          "
+          >Strona główna</a
+        >
+      </div>
+    </section>
+
+    <!-- Sign In Form Section -->
+    <section
+      class="login-form-section"
+      style="
+        margin: 32px auto 48px auto;
+        width: 100%;
+        max-width: 1100px;
+        padding: 48px 80px 36px 80px;
+      "
+    >
+      <div class="login-form-title">Zarejestruj się:</div>
+      <form class="login-form">
+        <div class="login-form-group">
+          <label for="firstName">Imie</label>
+          <input
+            type="text"
+            id="firstName"
+            name="firstName"
+            placeholder=""
+            autocomplete="firstName"
+            required
+          />
+        </div>
+        <div class="login-form-group">
+          <label for="lastName">Nazwisko</label>
+          <input
+            type="text"
+            id="lastName"
+            name="lastName"
+            placeholder=""
+            autocomplete="lastName"
+            required
+          />
+        </div>
+        <div class="login-form-group">
+          <label for="lastName">Email</label>
+          <input
+            type="text"
+            id="email"
+            name="email"
+            placeholder=""
+            autocomplete="email"
+            required
+          />
+        </div>
+        <div class="login-form-group">
+          <label for="lastName">Telefon</label>
+          <input
+            type="text"
+            id="phone"
+            name="phone"
+            placeholder=""
+            autocomplete="phone"
+            required
+          />
+        </div>
+        <div class="login-form-group">
+          <label for="password">Hasło</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder=""
+            autocomplete="password"
+            required
+          />
+        </div>
+        <div class="sign-form-group">
+          <input type="hidden" id="enabled" name="enabled" value="1" />
+        </div>
+        <button type="submit">Zarejestruj się</button>
+      </form>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" style="margin-top: auto">
+      <div class="footer__brand">
+        RemoTech
+        <span class="footer__social" style="margin-left: 18px">
+          <a href="#"><i class="bi bi-facebook"></i></a>
+          <a href="#"><i class="bi bi-instagram"></i></a>
+        </span>
+      </div>
+      <div
+        class="footer__links"
+        style="display: flex; align-items: center; gap: 24px"
+      >
+        <a href="produkty.html">Produkty</a>
+        <a href="onas.html" style="white-space: nowrap">O nas</a>
+        <button
+          class="produkty-cart-btn"
+          aria-label="Koszyk"
+          onclick="window.location.href='cart.html'"
+        >
+          <i class="bi bi-cart"></i>
+        </button>
+      </div>
+    </footer>
+  </body>
+</html>

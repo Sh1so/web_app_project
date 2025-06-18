@@ -1,5 +1,6 @@
 package com.uep.wap.eshop.remotech.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -14,6 +15,7 @@ public class UserRole {
     @ManyToOne
     @MapsId("userId")
     @JoinColumn(name = "user_id")
+    @JsonBackReference
     private User user;
 
     @Column(insertable = false, updatable = false)

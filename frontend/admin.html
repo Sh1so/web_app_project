@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Produkty - RemoTech</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+    />
+    <style>
+      body {
+        background: #f7f7f7;
+        margin: 0;
+        font-family: "Inter", Arial, sans-serif;
+        color: #111;
+      }
+      .container {
+        background: #fff;
+        max-width: 99vw;
+        margin: 0 auto;
+        padding: 0;
+        min-height: 100vh;
+      }
+      .header {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: #fff;
+        border-bottom: 1px solid #ededed;
+        padding: 0 36px 0 36px;
+        min-height: 58px;
+      }
+      .header__logo {
+        font-size: 1.2rem;
+        font-weight: 500;
+        padding: 16px 0;
+      }
+      .header__nav {
+        display: flex;
+        gap: 28px;
+      }
+      .header__link {
+        color: #222;
+        text-decoration: none;
+        font-size: 1rem;
+        padding: 0 4px;
+        transition: color 0.2s;
+      }
+      .header__link:hover {
+        color: #111;
+      }
+      .header__actions {
+        display: flex;
+        align-items: center;
+      }
+      .header__login {
+        background: #111;
+        color: #fff;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 6px;
+        font-weight: 500;
+        margin-left: 0;
+        cursor: pointer;
+        transition: background 0.2s;
+        text-decoration: none;
+      }
+      .header__login:hover {
+        background: #222;
+      }
+
+      /* PRODUCTS PAGE HEADING */
+      .produkty-header-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 0 0 0 0;
+        padding: 38px 32px 0 32px;
+      }
+      .produkty-title {
+        font-size: 2.6rem;
+        font-weight: bold;
+        margin: 0;
+        font-family: "Inter", Arial, sans-serif;
+        letter-spacing: -0.5px;
+      }
+      .produkty-cart-btn {
+        background: #111;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        padding: 8px 24px 8px 18px;
+        font-size: 1.07rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+        font-weight: 500;
+        box-shadow: 0 1px 2px #0001;
+        margin-right: 3px;
+      }
+      .produkty-cart-btn i {
+        font-size: 1.18em;
+      }
+      .produkty-cart-btn:hover {
+        background: #222;
+      }
+      .produkty-hr {
+        border: none;
+        border-top: 1px solid #dedede;
+        margin: 18px 0 0 0;
+      }
+      .produkty-content {
+        background: #f7f7f7;
+        padding: 42px 0 58px 0;
+      }
+
+      /* PRODUCTS GRID */
+      .produkty-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 38px;
+        max-width: 1160px;
+        margin: 0 auto 58px auto;
+        padding: 0 22px;
+      }
+      .produkty-card {
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: 0 2px 8px #0001;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        overflow: hidden;
+        margin: 0;
+        height: 100%;
+        position: relative;
+        padding: 0;
+      }
+      .produkty-card img {
+        width: 100%;
+        height: 170px;
+        object-fit: contain;
+        border-radius: 16px 16px 0 0;
+        background: #fafbfb;
+        box-shadow: none;
+        margin-bottom: 0;
+        align-self: stretch;
+      }
+      .produkty-card h3,
+      .produkty-card p,
+      .produkty-bottom-row {
+        padding: 0 18px;
+      }
+      .produkty-card h3 {
+        font-size: 1.16rem;
+        font-weight: 700;
+        margin: 18px 0 8px 0;
+        text-align: left;
+        width: 100%;
+        letter-spacing: -0.2px;
+      }
+      .produkty-card p {
+        font-size: 1.01rem;
+        color: #444;
+        margin: 0 0 18px 0;
+        text-align: left;
+        width: 100%;
+        line-height: 1.52;
+      }
+      .produkty-bottom-row {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: auto;
+        padding: 0 18px 18px 18px;
+        box-sizing: border-box;
+      }
+      .product-price {
+        font-size: 1.1rem;
+        font-weight: bold;
+        color: #111;
+        margin: 0;
+      }
+      .product-card__cart {
+        width: 36px;
+        height: 36px;
+        min-width: 36px;
+        border: none;
+        border-radius: 50%;
+        background: #111;
+        color: #fff;
+        font-size: 1.1rem;
+        padding: 0;
+        cursor: pointer;
+        transition: background 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 1px 2px #0001;
+        margin: 0;
+      }
+      .product-card__cart:hover {
+        background: #222;
+      }
+      /* Contact form styles */
+      .produkty-contact-section {
+        margin: 38px 0 0 0;
+        padding: 44px 0 40px 0;
+        border-top: 1px solid #dadada;
+        border-bottom: 1px solid #dadada;
+      }
+      .produkty-contact-title {
+        font-size: 2.1rem;
+        font-weight: 700;
+        text-align: left;
+        padding-left: 44px;
+        margin-bottom: 30px;
+      }
+      .produkty-contact-form {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+        max-width: 650px;
+        margin: 0 auto;
+      }
+      .produkty-contact-row {
+        display: flex;
+        gap: 18px;
+      }
+      .produkty-contact-form input,
+      .produkty-contact-form textarea {
+        padding: 10px;
+        border: 1px solid #bbb;
+        border-radius: 6px;
+        font-size: 1rem;
+        width: 100%;
+      }
+      .produkty-contact-form textarea {
+        min-height: 70px;
+        resize: vertical;
+      }
+      .produkty-contact-form button {
+        background: #111;
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        padding: 11px 32px;
+        font-size: 1.09rem;
+        cursor: pointer;
+        margin-top: 8px;
+        transition: background 0.2s;
+        font-weight: 500;
+      }
+      .produkty-contact-form button:hover {
+        background: #222;
+      }
+      /* CTA section */
+      .produkty-cta-section {
+        background: #f5f5f5;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 44px 40px 44px 44px;
+        margin-top: 38px;
+      }
+      .produkty-cta-section h2 {
+        font-size: 1.41rem;
+        font-weight: bold;
+        margin: 0;
+        letter-spacing: -0.5px;
+      }
+      .produkty-cta-section button {
+        background: #111;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        padding: 13px 36px;
+        font-size: 1.14rem;
+        cursor: pointer;
+        font-weight: 500;
+        transition: background 0.2s;
+      }
+      .produkty-cta-section button:hover {
+        background: #222;
+      }
+      .footer {
+        background: #fff;
+        border-top: 1px solid #eee;
+        padding: 32px 40px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 1rem;
+        max-width: 100vw;
+        margin: 0 auto;
+      }
+      .footer__brand {
+        font-weight: bold;
+        font-size: 1.2rem;
+      }
+      .footer__social a {
+        color: #222;
+        font-size: 1.5rem;
+        margin-right: 16px;
+        transition: color 0.2s;
+      }
+      .footer__social a:hover {
+        color: #0d6efd;
+      }
+      .footer__links {
+        display: flex;
+        gap: 24px;
+      }
+      .footer__links a {
+        color: #222;
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .footer__links a:hover {
+        color: #0d6efd;
+      }
+      @media (max-width: 1100px) {
+        .produkty-grid {
+          grid-template-columns: 1fr 1fr;
+          max-width: 97vw;
+        }
+        .footer {
+          max-width: 97vw;
+        }
+      }
+      @media (max-width: 800px) {
+        .produkty-grid {
+          grid-template-columns: 1fr;
+          max-width: 98vw;
+        }
+        .produkty-header-row {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 24px;
+        }
+        .produkty-cta-section {
+          flex-direction: column;
+          gap: 22px;
+          text-align: center;
+        }
+      }
+      @media (max-width: 500px) {
+        .produkty-title {
+          font-size: 1.2rem;
+        }
+      }
+      .header__logo {
+        font-size: 28px;
+        font-weight: 600;
+        padding: 10px 0;
+      }
+      .admin-button {
+        background-color: red;
+        text-decoration: none;
+      }
+    </style>
+    <script src="js/auth.js"></script>
+  </head>
+  <body>
+    <header class="header" style="padding: 10px 40px">
+      <div class="header__logo">RemoTech</div>
+      <nav class="header__nav">
+        <a href="index.html" class="header__link">Strona główna</a>
+        <a href="produkty.html" class="header__link">Produkty</a>
+        <a href="onas.html" class="header__link">O nas</a>
+      </nav>
+      <div class="header__actions">
+        <a href="login.html" class="header__login">Zaloguj się</a>
+      </div>
+    </header>
+    <main class="container">
+      <div class="produkty-header-row">
+        <h1 class="produkty-title">Panel Administracyjny</h1>
+      </div>
+      <hr class="produkty-hr" />
+      <div class="produkty-content">
+        <div class="produkty-grid produkty-grid-js">
+          <div class="produkty-card">
+            <img src="assets/add-product.png" alt="dodaj_produkt" />
+            <h3>Dodaj Produkt</h3>
+            <p>Dodaj nowy produkt do bazy danych</p>
+            <div class="produkty-bottom-row">
+              <span class="product-price"></span>
+              <button class="" aria-label="">+</button>
+            </div>
+          </div>
+          <div class="produkty-card">
+            <img src="assets/edit-product.jpg" alt="edytuj_produkt" />
+            <h3>Zarządzaj produktami</h3>
+            <p>Edytuj lub usuń produkt z bady danych</p>
+            <div class="produkty-bottom-row">
+              <span class="product-price"></span>
+              <button class="" aria-label="">+</button>
+            </div>
+          </div>
+          <div class="produkty-card">
+            <img src="assets/add-user.png" alt="edytuj_produkt" />
+            <h3>Zarządzaj użytkownikami</h3>
+            <p>Zarządzaj klientami i rolami</p>
+            <div class="produkty-bottom-row">
+              <span class="product-price"></span>
+              <button class="" aria-label="">+</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer class="footer">
+      <div class="footer__brand">
+        RemoTech
+        <span class="footer__social" style="margin-left: 18px">
+          <a href="#"><i class="bi bi-facebook"></i></a>
+          <a href="#"><i class="bi bi-instagram"></i></a>
+        </span>
+      </div>
+      <div
+        class="footer__links"
+        style="display: flex; align-items: center; gap: 24px"
+      >
+        <a href="index.html">Strona główna</a>
+        <a href="onas.html">O nas</a>
+        <button class="produkty-cart-btn" aria-label="Koszyk">
+          <i class="bi bi-cart"></i>
+        </button>
+      </div>
+    </footer>
+  </body>
+</html>

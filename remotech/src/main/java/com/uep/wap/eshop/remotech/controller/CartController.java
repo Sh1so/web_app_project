@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/carts")
+@CrossOrigin
 public class CartController {
 
     private final CartService cartService;

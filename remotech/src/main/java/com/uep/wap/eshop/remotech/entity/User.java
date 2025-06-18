@@ -42,6 +42,7 @@ public class User {
     private Boolean enabled;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
+    @JsonManagedReference
     private Set<UserRole> roles;
 
     @OneToMany(mappedBy = "user")

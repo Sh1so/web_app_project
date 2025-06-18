@@ -1,175 +1,223 @@
 <!DOCTYPE html>
 <html lang="pl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Koszyk - RemoTech</title>
-    <link rel="stylesheet" href="css/landing.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/landing.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+    />
     <style>
+      .header {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+      }
+
+      .header__login {
+        background: #111;
+        color: #fff;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 6px;
+        font-weight: 500;
+        margin-left: 0;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+      .header__login:hover {
+        background: #222;
+      }
+      .cart-container {
+        max-width: 900px;
+        margin: 48px auto 48px auto;
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: 0 2px 16px #0001;
+        padding: 40px 32px 32px 32px;
+      }
+      .cart-title {
+        font-size: 2.2rem;
+        font-weight: bold;
+        margin-bottom: 32px;
+        text-align: left;
+      }
+      .cart-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 32px;
+      }
+      .cart-table th,
+      .cart-table td {
+        padding: 16px 10px;
+        text-align: left;
+        border-bottom: 1px solid #eee;
+      }
+      .cart-table th {
+        font-size: 1.1rem;
+        font-weight: 600;
+        background: #fafafa;
+      }
+      .cart-table img {
+        width: 60px;
+        height: 60px;
+        object-fit: contain;
+        border-radius: 10px;
+        background: #f3f3f3;
+      }
+      .cart-remove-btn {
+        background: #fff;
+        border: 1px solid #eee;
+        color: #d00;
+        border-radius: 50%;
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        cursor: pointer;
+        transition: background 0.2s, color 0.2s;
+      }
+      .cart-remove-btn:hover {
+        background: #f8d7da;
+        color: #a00;
+      }
+      .cart-summary {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 32px;
+        margin-top: 24px;
+      }
+      .cart-total {
+        font-size: 1.3rem;
+        font-weight: bold;
+      }
+      .cart-checkout-btn {
+        background: #111;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        padding: 14px 38px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+      .cart-checkout-btn:hover {
+        background: #222;
+      }
+      @media (max-width: 700px) {
         .cart-container {
-            max-width: 900px;
-            margin: 48px auto 48px auto;
-            background: #fff;
-            border-radius: 16px;
-            box-shadow: 0 2px 16px #0001;
-            padding: 40px 32px 32px 32px;
+          padding: 18px 4px;
         }
         .cart-title {
-            font-size: 2.2rem;
-            font-weight: bold;
-            margin-bottom: 32px;
-            text-align: left;
+          font-size: 1.3rem;
         }
-        .cart-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 32px;
+        .cart-table th,
+        .cart-table td {
+          padding: 8px 4px;
         }
-        .cart-table th, .cart-table td {
-            padding: 16px 10px;
-            text-align: left;
-            border-bottom: 1px solid #eee;
-        }
-        .cart-table th {
-            font-size: 1.1rem;
-            font-weight: 600;
-            background: #fafafa;
-        }
-        .cart-table img {
-            width: 60px;
-            height: 60px;
-            object-fit: contain;
-            border-radius: 10px;
-            background: #f3f3f3;
-        }
-        .cart-remove-btn {
-            background: #fff;
-            border: 1px solid #eee;
-            color: #d00;
-            border-radius: 50%;
-            width: 36px;
-            height: 36px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: background 0.2s, color 0.2s;
-        }
-        .cart-remove-btn:hover {
-            background: #f8d7da;
-            color: #a00;
-        }
-        .cart-summary {
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            gap: 32px;
-            margin-top: 24px;
-        }
-        .cart-total {
-            font-size: 1.3rem;
-            font-weight: bold;
-        }
-        .cart-checkout-btn {
-            background: #111;
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            padding: 14px 38px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        .cart-checkout-btn:hover {
-            background: #222;
-        }
-        @media (max-width: 700px) {
-            .cart-container { padding: 18px 4px; }
-            .cart-title { font-size: 1.3rem; }
-            .cart-table th, .cart-table td { padding: 8px 4px; }
-        }
+      }
     </style>
-</head>
-<body style="min-height: 100vh; display: flex; flex-direction: column;">
-    <header class="header">
-        <div class="header__logo">RemoTech</div>
-        <nav class="header__nav" style="display: flex; align-items: center; gap: 32px;">
-            <a href="index.html" class="header__link">Strona główna</a>
-            <a href="produkty.html" class="header__link">Produkty</a>
-            <a href="onas.html" class="header__link">O nas</a>
-        </nav>
-        <div class="header__actions">
-            <button class="header__login" onclick="window.location.href='login.html'">LOG IN</button>
-        </div>
+    <script src="js/auth.js"></script>
+  </head>
+  <body style="min-height: 100vh; display: flex; flex-direction: column">
+    <header class="header" style="padding: 10px 40px">
+      <div class="header__logo">RemoTech</div>
+      <nav
+        class="header__nav"
+        style="display: flex; align-items: center; gap: 32px"
+      >
+        <a href="index.html" class="header__link">Strona główna</a>
+        <a href="produkty.html" class="header__link">Produkty</a>
+        <a href="onas.html" class="header__link">O nas</a>
+      </nav>
+      <div class="header__actions">
+        <button
+          class="header__login"
+          onclick="window.location.href='login.html'"
+        >
+          LOG IN
+        </button>
+      </div>
     </header>
     <main>
-        <div class="cart-container">
-            <div class="cart-title">Twój koszyk</div>
-            <table class="cart-table">
-                <thead>
-                    <tr>
-                        <th>Produkt</th>
-                        <th>Nazwa</th>
-                        <th>Cena</th>
-                        <th>Ilość</th>
-                        <th>Usuń</th>
-                    </tr>
-                </thead>
-                <tbody id="cart-items">
-                    <!-- Cart items will be rendered here by JS -->
-                </tbody>
-            </table>
-            <div class="cart-summary">
-                <span class="cart-total">Razem: <span id="cart-total">0,00 zł</span></span>
-                <button class="cart-checkout-btn">Przejdź do zamówienia</button>
-            </div>
+      <div class="cart-container">
+        <div class="cart-title">Twój koszyk</div>
+        <table class="cart-table">
+          <thead>
+            <tr>
+              <th>Produkt</th>
+              <th>Nazwa</th>
+              <th>Cena</th>
+              <th>Ilość</th>
+              <th>Usuń</th>
+            </tr>
+          </thead>
+          <tbody id="cart-items">
+            <!-- Cart items will be rendered here by JS -->
+          </tbody>
+        </table>
+        <div class="cart-summary">
+          <span class="cart-total"
+            >Razem: <span id="cart-total">0,00 zł</span></span
+          >
+          <button class="cart-checkout-btn">Przejdź do zamówienia</button>
         </div>
+      </div>
     </main>
-    <footer class="footer" style="margin-top: auto;">
-        <div class="footer__brand">RemoTech
-            <span class="footer__social" style="margin-left: 18px;">
-                <a href="#"><i class="bi bi-facebook"></i></a>
-                <a href="#"><i class="bi bi-instagram"></i></a>
-            </span>
-        </div>
-        <div class="footer__links" style="display: flex; align-items: center; gap: 24px;">
-            <a href="index.html">Strona główna</a>
-            <a href="produkty.html">Produkty</a>
-            <a href="onas.html">O nas</a>
-        </div>
+    <footer class="footer" style="margin-top: auto">
+      <div class="footer__brand">
+        RemoTech
+        <span class="footer__social" style="margin-left: 18px">
+          <a href="#"><i class="bi bi-facebook"></i></a>
+          <a href="#"><i class="bi bi-instagram"></i></a>
+        </span>
+      </div>
+      <div
+        class="footer__links"
+        style="display: flex; align-items: center; gap: 24px"
+      >
+        <a href="index.html">Strona główna</a>
+        <a href="produkty.html">Produkty</a>
+        <a href="onas.html">O nas</a>
+      </div>
     </footer>
     <script src="js/api.js"></script>
     <script>
-    // Simple cart rendering using ApiService (mocked)
-    async function renderCart() {
+      // Simple cart rendering using ApiService (mocked)
+      async function renderCart() {
         const cart = await ApiService.getCart();
         const cartItems = cart.items || [];
-        const cartItemsTbody = document.getElementById('cart-items');
-        const cartTotalSpan = document.getElementById('cart-total');
-        cartItemsTbody.innerHTML = '';
+        const cartItemsTbody = document.getElementById("cart-items");
+        const cartTotalSpan = document.getElementById("cart-total");
+        cartItemsTbody.innerHTML = "";
         let total = 0;
         for (const item of cartItems) {
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
                 <td><img src="assets/laptop stand.webp" alt="Produkt"></td>
-                <td>${item.product ? item.product.short_name : ''}</td>
-                <td>${item.product ? item.product.price.toFixed(2) : ''} zł</td>
+                <td>${item.product ? item.product.short_name : ""}</td>
+                <td>${item.product ? item.product.price.toFixed(2) : ""} zł</td>
                 <td>${item.quantity}</td>
-                <td><button class="cart-remove-btn" onclick="removeFromCart(${item.product_id})"><i class="bi bi-x"></i></button></td>
+                <td><button class="cart-remove-btn" onclick="removeFromCart(${
+                  item.product_id
+                })"><i class="bi bi-x"></i></button></td>
             `;
-            cartItemsTbody.appendChild(tr);
-            if (item.product) total += item.product.price * item.quantity;
+          cartItemsTbody.appendChild(tr);
+          if (item.product) total += item.product.price * item.quantity;
         }
-        cartTotalSpan.textContent = total.toFixed(2) + ' zł';
-    }
-    async function removeFromCart(productId) {
+        cartTotalSpan.textContent = total.toFixed(2) + " zł";
+      }
+      async function removeFromCart(productId) {
         await ApiService.removeFromCart(productId);
         renderCart();
-    }
-    renderCart();
+      }
+      renderCart();
     </script>
-</body>
-</html> 
+  </body>
+</html>

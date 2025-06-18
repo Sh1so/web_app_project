@@ -3,13 +3,16 @@ package com.uep.wap.eshop.remotech.controller;
 import com.uep.wap.eshop.remotech.entity.User;
 import com.uep.wap.eshop.remotech.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping(value = "/api/users", produces = MediaType.APPLICATION_JSON_VALUE)
 public class UserController {
 
@@ -32,7 +35,7 @@ public class UserController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping()
+    @PostMapping
     public User createUser(@RequestBody User user) {
         return userService.createUser(user);
     }
@@ -51,6 +54,22 @@ public class UserController {
                 : ResponseEntity.notFound().build();
     }
 
+    @GetMapping("/current")
+    public ResponseEntity<User> getCurrentUser(Authentication authentication) {
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        String email = authentication.getName();
+        User user = userService.findByEmail(email);
+
+        // Opcjonalnie: wyczyść hasło przed zwróceniem
+        if (user != null) {
+            user.setPassword(null); // Nie wysyłaj hasła do frontendu!
+        }
+
+        return user != null ? ResponseEntity.ok(user) : ResponseEntity.notFound().build();
+    }
     // @PutMapping("/{id}/role")
     // public ResponseEntity<User> updateUserRole(@PathVariable Long id, @RequestParam String role) {
     //     try {

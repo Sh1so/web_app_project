@@ -24,9 +24,10 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository, CartService cartService){
+    public UserService(UserRepository userRepository, CartService cartService, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.cartService = cartService;
+        this.passwordEncoder = passwordEncoder;
         //this.userRoleRepository = userRoleRepository;
     }
 
@@ -34,11 +35,12 @@ public class UserService {
         return passwordEncoder.encode(rawPassword);
     }
 
-    public void registerNewUser(User user, String rawPassword) {
+    public void hashPassword(User user, String rawPassword) {
         String encodedPassword = encodePassword(rawPassword);
         user.setPassword(encodedPassword);
         // save user to repository here...
     }
+
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
@@ -50,9 +52,10 @@ public class UserService {
     @Transactional
     public User createUser(User user) {
         // Create a new cart for the user
+        hashPassword(user, user.getPassword());
         Cart cart = new Cart(user);
         user.setCart(cart);
-        
+
         // Save the user (cart will be saved automatically due to cascade)
         return userRepository.save(user);
     }
@@ -64,11 +67,11 @@ public class UserService {
                     user.setId(id);
                     user.setCreatedAt(existingUser.getCreatedAt());
                     user.setUpdatedAt(LocalDateTime.now());
-                    
+
                     // Preserve relationships
                     user.setOrders(existingUser.getOrders());
                     user.setCart(existingUser.getCart());
-                    
+
                     return userRepository.save(user);
                 });
     }
@@ -79,6 +82,20 @@ public class UserService {
             return true;
         }
         return false;
+    }
+
+    public User findByEmail(String email) {
+        if (email == null || email.trim().isEmpty()) {
+            return null;
+        }
+
+        Optional<User> user = userRepository.findByEmail(email.trim());
+
+        if (user.isPresent() && user.get().getEnabled().equals(true)) {
+            return user.get();
+        }
+
+        return null;
     }
 
     // public Optional<User> updateUserRole(Long userId, String roleName) {
@@ -97,7 +114,8 @@ public class UserService {
     //     // Update the user's role
     //     User user = userOptional.get();
     //     user.setUserRole(role);
-        
+
     //     return Optional.of(userRepository.save(user));
     // }
-} 
+}
+
