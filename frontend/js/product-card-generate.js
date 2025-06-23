@@ -8,7 +8,13 @@ const images = [
   "assets/mousepad.jpg",
   "assets/lamp desk.jpg",
   "assets/wireless headphones.jpg",
-  "assets/laptop stand.webp",
+  "assets/new-product.jpg",
+  "assets/new-product.jpg",
+  "assets/new-product.jpg",
+  "assets/new-product.jpg",
+  "assets/new-product.jpg",
+  "assets/new-product.jpg",
+  "assets/new-product.jpg",
 ];
 let i = 0;
 
